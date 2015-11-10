@@ -234,6 +234,7 @@ int perform_interception(modsec_rec *msr) {
                         log_escape_nq(msr->mp, actionset->intercept_uri));
                 } else {
                     msr->r->filename = apr_psprintf(msr->mp, "proxy:%s", actionset->intercept_uri);
+                    apr_table_setn(msr->r->notes,"proxy-nocanon",1);
                     msr->r->proxyreq = PROXYREQ_REVERSE;
                     msr->r->handler = "proxy-server";
                     status = OK;
